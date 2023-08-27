@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;700&display=swap" rel="stylesheet">
+  
+  <title>Frontend Mentor | Results summary component</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width:5px;
+      position: absolute;
+    }
+    ::-webkit-scrollbar:hover {
+      width:10px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: white;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 6px;
+      background-color: rgb(63, 63, 248);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: rgb(55, 55, 214) ;
+    }
+
+    h2,h3,h4,p,ul {
+      margin: 0;
+    }
+
+    .container{
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    .main {
+      display: flex;
+      border-radius: 20px;
+      background: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+      min-width: 275px;
+    }
+
+    @media (min-width: 768px) {
+      .main{
+        box-shadow: 0 0 40px 20px #eee;
+      }
+    }
+
+    .main .result {
+      padding: 30px 20px;
+      text-align: center;
+      color: #ccc;
+      font-weight: 500;
+      background-image: linear-gradient(to bottom, rgb(63, 63, 248) 70%, rgb(55, 55, 214));
+      border-radius: 0 20px 20px 0;
+    }
+
+    .main > div {
+      min-width: 275px;
+    }
+
+    @media (max-width: 767px) {
+      .main {
+        flex-direction: column;
+        border-radius: 0;
+        width: 100%;
+        transform: none;
+        position: static;
+      }
+
+      .main .result {
+        border-radius: 0 0 20px 20px;
+      }
+    }
+
+    .main .result h3 {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .main .count {
+      margin: 60px auto;
+      background-image: linear-gradient(to top, rgb(63, 63, 248), rgb(49, 49, 194));
+      width: 150px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: wrap;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 767px) {
+      .main .count{
+        margin: 40px auto;
+      }
+    }
+
+    .main .count h4 {
+      width: 100%;
+      color: white;
+      font-size: 50px;
+    }
+
+    .main .count span {
+      width: 100%;
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    .main .result h2 {
+      color: white;
+      font-size: 20px;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .main .result p {
+      font-size: 12px;
+      padding: 0 19px;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .main .summary {
+      padding: 20px;
+    }
+
+    .main .summary h2 {
+      margin-bottom: 30px;
+    }
+
+    .main .summary ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    .main .summary ul li {
+      box-sizing: border-box;
+      position: relative;
+      margin-bottom: 15px;
+      display: flex;
+      gap: 7px;
+      padding: 15px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid;
+      border-radius: 10px;
+    }
+
+    .main .summary ul li::before{
+      content: '';
+      position: absolute;
+      left: 10px;
+      height: calc(100%);
+      width: calc(100% - 20px);
+      border-top: 10px solid white;
+      border-bottom: 10px solid white;
+    }
+
+      .main .summary ul li::after{
+      content: '';
+      position: absolute;
+      top: 10px;
+      width: calc(100%);
+      height: calc(100% - 20px);
+      border-left: 10px solid white;
+      border-right: 10px solid white;
+    }
+
+    .main .summary ul li.red {
+      background-color: rgba(255, 0, 0, 0.1);
+      color: #ff0000;
+      /* border-image: linear-gradient(to right , red 5%, transparent 7%, transparent 93%, red 95%) 5 ; */
+    }
+    .main .summary ul li.yellow {
+      background-color: hsla(41, 100%, 68%, 0.1);
+      color: #ffca5b;
+      /* border-image: linear-gradient(to right, #ffca5b 5%, transparent 7%, transparent 93%, #ffca5b 95%) 5; */
+    }
+    .main .summary ul li.green {
+      background-color: hsla(164, 56%, 57%, 0.1);
+      color: #55cfaf;
+      /* border-image: linear-gradient(to right, #55cfaf 5%, transparent 7%, transparent 93%, #55cfaf 95%) 5 ; */
+    }
+    .main .summary ul li.blue {
+      background-color: rgba(0, 0, 152, 0.1);
+      color: #000098;
+      /* border-image: linear-gradient(to right, #000098 5%, transparent 7%, transparent 93%, #000098 95%) 5 ; */
+    }
+
+    .main .summary ul li > span {
+      flex-grow: 1;
+    }
+
+    .main .summary div{
+      color: black;
+    }
+
+    .main .summary div > span {
+      color: #919090;
+      font-size: 14px;
+    }
+
+
+    .main .summary a {
+      display: block;
+      width: fit-content;
+      margin: 30px auto 0;
+      border-radius: 30px;
+      padding: 15px 50px;
+      color: white;
+      background-color: #1b153f;
+      font-size: 18px;
+      text-decoration: none;
+      transition: .3s;
+    }
+
+    .main .summary a:hover {  
+      background-color: rgb(63, 63, 248);
+    }
+
+    .attribution {
+      box-sizing: border-box;
+      padding: 20px 10px;
+      text-align: center;
+      font-size: 11px;
+      background-image: linear-gradient(to top, rgb(63, 63, 248), rgb(49, 49, 194));
+    }
+    .attribution a {
+      display: inline-block;
+      width: fit-content;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      transition: .3s;
+    }
+    .attribution a:hover{ 
+      font-size: 15px;
+      margin: 0 5px;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="main">
+
+      <div class="result">
+        <h3>Your Result</h3>
+        <div class="count">
+          <h4>76</h4>
+          <span>of 100</span>
+        </div>
+        <h2>Great</h2>
+        <p>You scored higher than 65% of the people who have taken these tests.</p>
+      </div>
+
+      <div class="summary">
+        <h2>Summary</h2>
+        <ul>
+          <li class="red">
+            <img src="assets/images/icon-reaction.svg" alt="">
+            <span>Reaction</span>
+            <div>80 <span>/ 100</span></div>
+          </li>
+          <li class="yellow">
+            <img src="assets/images/icon-memory.svg" alt="">
+            <span>Memory</span>
+            <div>92 <span>/ 100</span></div>
+          </li>
+          <li class="green">
+            <img src="assets/images/icon-verbal.svg" alt="">
+            <span>Verbal</span>
+            <div>61 <span>/ 100</span></div>
+          </li>
+          <li class="blue">
+            <img src="assets/images/icon-visual.svg" alt="">
+            <span>Visual</span>
+            <div>72 <span>/ 100</span></div>
+          </li>
+        </ul>
+
+        <a href="#">Continue</a>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="https://www.facebook.com/profile.php?id=100085150256745">Omar</a> & <a href="https://www.facebook.com/mahmoud.walid.16718">Mahmoud</a>
+  </div>
+</body>
+</html>
